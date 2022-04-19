@@ -14,41 +14,67 @@ const gameController = (() => {
   const playerOne = player(prompt('name for player 1'), 'X')
   const playerTwo = player(prompt('name for player 2'), 'O')
   let board = Array(9).fill('')
-  let gameOn = 0
   let counter = 1
+  let gameOn = 0
   const playGame = (node) => {
 
   }
 
-  const playTurn = (i, counter) => {
-    if (counter == 1) {
-      board[i] = 'X'
-      counter = 2
-    }
-    else {
-      board[i] = 'O'
-      counter = 1
-    }
-    setBoard(board, counter)
+
+  const checkBoard = (i) => {
+    console.log(i)
   }
 
-  const addEvent = (listItem, i, counter) => {
+  const checkPlay = (i) => {
+    if (board[i] == 'X' || board[i] == 'O' || i > 9 || i < 0) {
+      return false
+    }
+    else {
+      return true
+    }
+  }
+
+  const playTurn = (i) => {
+    if (checkPlay(i)) {
+      if (gameController.counter != 2) {
+        board[i] = 'X'
+        gameController.counter = 2
+      }
+      else {
+        board[i] = 'O'
+        gameController.counter = 1
+      }
+      
+      checkBoard(i)
+      setBoardDisplay(board)
+    }
+  }
+
+  const addEvent = (listItem, i) => {
     listItem.addEventListener('click', () => {
-      playTurn(i, counter)
+      playTurn(i)
     })
   }
 
-  const setBoard = (board, counter) => {
+  const setBoardDisplay = (board) => {
     const boardList = document.querySelector("#board")
     const children = boardList.children
-    for(i=0; i < 9; i++) {
+    for(i=0;i<=8;i++) {
       children[i].innerHTML = board[i]
-      addEvent(children[i], i, counter)
+    }
+  } 
+
+  const setBoard = () => {
+    const boardList = document.querySelector("#board")
+    const children = boardList.children
+    setBoardDisplay(board)
+    for(i=0; i < 9; i++) {
+      addEvent(children[i], i)
     }
   }
 
   const startGame = () => {
-    setBoard(board, counter)
+    setBoard()
   }
 
   const initializeGame = () => {
