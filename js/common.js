@@ -17,14 +17,18 @@ const gameController = (() => {
   let counter = 1
   let gameOn = 0
 
-  const endGame = (winner) => {
+  const endGame = (winner='no one') => {
     board = Array(9).fill('')
     setBoardDisplay(board)
     gameController.counter = 1
     let winnerName = document.querySelector('#winner')
     let winnerHeader = document.querySelector('h2')
-
-    winnerName.innerHTML = winner.getName()
+    if (winner != 'no one'){
+      winnerName.innerHTML = winner.getName()
+    }
+    else {
+      winnerName.innerHTML = 'nobody'
+    }
     winnerHeader.classList.remove('hidden')
   }
 
@@ -38,11 +42,14 @@ const gameController = (() => {
     ((i==0||i==3||i==6)&&(board[i]==board[i+1]&&board[i]==board[i+2])) ||
     ((i==2||i==5||i==8)&&(board[i]==board[i-1]&&board[i]==board[i-2])) ||
     board[i]==board[i+4]&&board[i]==board[i+8] ||
-    ((i==7)&&(board[i]==board[i-2]&&board[i]==board[i-4])) ||
+    ((i==6)&&(board[i]==board[i-2]&&board[i]==board[i-4])) ||
     board[i]==board[i-4]&&board[i]==board[i-8] ||
-    ((i==3)&&(board[i]==board[i+2]&&board[i]==board[i+4]))) {
+    ((i==2)&&(board[i]==board[i+2]&&board[i]==board[i+4]))) {
       console.log('Gratz you win!')
       endGame(player)
+    }
+    else if (!board.includes('')) {
+      endGame()
     }
     console.log(i)
     console.log(player.getName())
