@@ -14,34 +14,41 @@ const gameController = (() => {
   const playerOne = player(prompt('name for player 1'), 'X')
   const playerTwo = player(prompt('name for player 2'), 'O')
   let board = Array(9).fill('')
-  let counter = 1
   let gameOn = 0
-
+  let counter = 1
   const playGame = (node) => {
 
   }
 
-  const playTurn = () => {
-    
+  const playTurn = (i, counter) => {
+    if (counter == 1) {
+      board[i] = 'X'
+      counter = 2
+    }
+    else {
+      board[i] = 'O'
+      counter = 1
+    }
+    setBoard(board, counter)
   }
 
-  const addEvent = (listItem, i) => {
+  const addEvent = (listItem, i, counter) => {
     listItem.addEventListener('click', () => {
-      playTurn(board[i])
+      playTurn(i, counter)
     })
   }
 
-  const setBoard = (board) => {
+  const setBoard = (board, counter) => {
     const boardList = document.querySelector("#board")
     const children = boardList.children
     for(i=0; i < 9; i++) {
       children[i].innerHTML = board[i]
-      addEvent(children[i], i)
+      addEvent(children[i], i, counter)
     }
   }
 
   const startGame = () => {
-    setBoard(board)
+    setBoard(board, counter)
   }
 
   const initializeGame = () => {
