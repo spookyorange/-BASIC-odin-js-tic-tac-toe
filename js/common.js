@@ -29,18 +29,18 @@ const gameController = (() => {
   }
 
   const checkBoard = (i, player) => {
-    if ((board[i]==board[i-3]&&board[i-3]==board[i+3]) ||
-    board[i]==board[i-1]&&board[i]==board[i+1] ||
+    if ((board[i]==board[i-3]&&board[i]==board[i+3]) ||
+    ((i==1||i==4||i==7)&&(board[i]==board[i-1]&&board[i]==board[i+1])) ||
     board[i]==board[i-4]&&board[i]==board[i+4] ||
-    board[i]==board[i-2]&&board[i]==board[i+2] ||
+    ((i==4)&&(board[i]==board[i-2]&&board[i]==board[i+2])) ||
     board[i]==board[i+3]&&board[i]==board[i+6] ||
     board[i]==board[i-3]&&board[i]==board[i-6] ||
-    board[i]==board[i+1]&&board[i]==board[i-2] ||
-    board[i]==board[i-1]&&board[i]==board[i-2] ||
+    ((i==0||i==3||i==6)&&(board[i]==board[i+1]&&board[i]==board[i+2])) ||
+    ((i==2||i==5||i==8)&&(board[i]==board[i-1]&&board[i]==board[i-2])) ||
     board[i]==board[i+4]&&board[i]==board[i+8] ||
-    board[i]==board[i-2]&&board[i]==board[i-4] ||
+    ((i==7)&&(board[i]==board[i-2]&&board[i]==board[i-4])) ||
     board[i]==board[i-4]&&board[i]==board[i-8] ||
-    board[i]==board[i+2]&&board[i]==board[i+4]) {
+    ((i==3)&&(board[i]==board[i+2]&&board[i]==board[i+4]))) {
       console.log('Gratz you win!')
       endGame(player)
     }
