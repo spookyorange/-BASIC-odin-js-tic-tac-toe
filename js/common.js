@@ -16,13 +16,36 @@ const gameController = (() => {
   let board = Array(9).fill('')
   let counter = 1
   let gameOn = 0
-  const playGame = (node) => {
 
+  const endGame = (winner) => {
+    board = Array(9).fill('')
+    setBoardDisplay(board)
+    gameController.counter = 1
+    let winnerName = document.querySelector('#winner')
+    let winnerHeader = document.querySelector('h2')
+
+    winnerName.innerHTML = winner.getName()
+    winnerHeader.classList.remove('hidden')
   }
 
-
-  const checkBoard = (i) => {
+  const checkBoard = (i, player) => {
+    if ((board[i]==board[i-3]&&board[i-3]==board[i+3]) ||
+    board[i]==board[i-1]&&board[i]==board[i+1] ||
+    board[i]==board[i-4]&&board[i]==board[i+4] ||
+    board[i]==board[i-2]&&board[i]==board[i+2] ||
+    board[i]==board[i+3]&&board[i]==board[i+6] ||
+    board[i]==board[i-3]&&board[i]==board[i-6] ||
+    board[i]==board[i+1]&&board[i]==board[i-2] ||
+    board[i]==board[i-1]&&board[i]==board[i-2] ||
+    board[i]==board[i+4]&&board[i]==board[i+8] ||
+    board[i]==board[i-2]&&board[i]==board[i-4] ||
+    board[i]==board[i-4]&&board[i]==board[i-8] ||
+    board[i]==board[i+2]&&board[i]==board[i+4]) {
+      console.log('Gratz you win!')
+      endGame(player)
+    }
     console.log(i)
+    console.log(player.getName())
   }
 
   const checkPlay = (i) => {
@@ -37,16 +60,18 @@ const gameController = (() => {
   const playTurn = (i) => {
     if (checkPlay(i)) {
       if (gameController.counter != 2) {
-        board[i] = 'X'
+        console.log('adjaskdnasdas')
+        board[i] = playerOne.getSymbol()
         gameController.counter = 2
+        setBoardDisplay(board)
+        checkBoard(i, playerOne)
       }
       else {
-        board[i] = 'O'
+        board[i] = playerTwo.getSymbol()
         gameController.counter = 1
+        setBoardDisplay(board)
+        checkBoard(i, playerTwo)
       }
-      
-      checkBoard(i)
-      setBoardDisplay(board)
     }
   }
 
